@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Bitcoin as explained by other people (read time: 6-10 hours) | Elmore Town (since Elmore City already exists)</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Bitcoin as explained by other people (read time: 6-10 hours)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hi there," />
+<meta property="og:description" content="Hi there," />
+<link rel="canonical" href="http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html" />
+<meta property="og:url" content="http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html" />
+<meta property="og:site_name" content="Elmore Town (since Elmore City already exists)" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-07T23:04:06+01:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html","headline":"Bitcoin as explained by other people (read time: 6-10 hours)","datePublished":"2020-02-07T23:04:06+01:00","dateModified":"2020-02-07T23:04:06+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html"},"description":"Hi there,","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Elmore Town (since Elmore City already exists)" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Elmore Town (since Elmore City already exists)</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+<h1>Bitcoin as explained by other people (read time: 6-10 hours)</h1>
+<p>07 Feb 2020 - </p>
+
+<p>Hi there,</p>
+
+<p>I have taken it upon myself to start a blog. Not necessarily to create a big cult following, but to remind myself of the things I did and in case I forget something, to refresh my memory by detailing how I learned it.<br />
+In this post: I learned to love the Bitcoin concept in just a weekend. This was really eye-opening to me, since to me it seemed that bitcoin was a sluggish but global cryptocurrency, but there is way more than meets the eye. Of course, at first I started of with what I consider to be the <a href="https://www.youtube.com/watch?v=JyxRH18YlpA">best high-level explanation you can imagine from the Youtube Channel Computerphile</a>. And after that a good technical dive into what it really means to have a bitcoin (and what terms like ‘cryptography’ and ‘digital signature’ really mean) from <a href="https://www.youtube.com/watch?v=bBC-nXj3Ng4">3Blue1Brown</a>.</p>
+
+<p>This is probably sufficient to read the <a href="https://whitepaperdatabase.com/bitcoin-btc-whitepaper/">bitcoin whitepaper</a>, where Satoshi Nakamote, the pseudonym of the creator(s) outlines his idea and his vision. However, there are definitely some missing details in there. For example, I was wondering how you would take a ‘hash of a transaction’? What would you include and what would be left out? The real answer can be easily found in the source code (more on that later), but the short answer was: ‘Everything necessary to fully identify the transaction, and then serialize it into a consistent and universally computer-readable format’.</p>
+
+<p>To get more information about the practical safety of the bitcoin protocol, an interesting entry point are the <a href="https://nakamotostudies.org/emails/">early email discussions with Nakamoto</a>, where other computer scientists discussed the pitfalls and concerns about the safety of the bitcoin protocol. The answers are clear and well-versed. So much so, that eventually, 6 years later, a split happened in the Bitcoin community: should we respect Satoshi’s initial brilliant ideas or try to improve upon the initial protocol?</p>
+
+<p>If you want to see a bitcoin transaction in action, I would look to these youtube videos from Youtube Channel 402PaymentRequired, starting with<a href="https://www.youtube.com/watch?v=BQZXqmWSICM"> Video #9</a> until #18. The tutorial is given through an imaginary conversation, so this may not be to your liking.</p>
+
+<p>Now it is time to dive into the real C++ code. I would recommend looking at <a href="https://sourceforge.net/p/bitcoin/code/1/">Satoshi’s original code</a> for running a full node that adheres and maintains the Bitcoin protocol. Download the source code and open it in your favorite C++ code editor. Visual Code seems to be the rage right now. It really is beautiful code, so I understand why other computer scientists got excited by it.</p>
+
+<p>While reading through the code, some handy references are: public-private key encryption (see e.g. the <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy#/media/File:PGP_diagram.svg">Figure here</a> ),  <a href="https://security.stackexchange.com/questions/14479/what-does-key-signing-mean">digital signatures</a> and knowing that the code uses OpenSSL for the encryption and BerkeleyDB for the database managing. 
+Fun fact, that explanation of digital signatures was actually explaining it for the signing of public key of someone else. However, you can sign any message this way! By this, the receiver can make sure the message (the public encryption key or a random photo of a cat) came from who it said it came!</p>
+
+<p>You can also look at the consensus <a href="https://github.com/bitcoin/bitcoin">current bitcoin code</a>, but it is a big bloated. It also included SegWit (segregated witnesses) and way more upgraded. From 2015 on, the big changes are maintained well on <a href="https://bitcoincore.org/en/blog/">their blog</a>. I haven’t dived deep into all the changes that have happened since the release, but big ones are: the introduction of compressed public keys, multi-signature transactions, segregated witnesses, better coin tracking, the OP_RETURN message use and creating a second (fast) transaction layer on top of the blockchain: the Lightning Network.</p>
+
+<p>Now came the bad news: I was looking for some edge cases in the old code and thought of one. I found in the ProcessMessages (where the network messages are handled) that when a new ‘I found a block proof-of-work!’ message was given, the block was analyzed for some simple checks and it was checked if there were transactions and if there was a coinbase (the first transaction in a block that gives the miner the mining reward). I thought, there was no mention of any money checks. How can it check if a coin is spent. So I started looking. I found it in the ‘tx’ (transaction) message, since all transactions need to be published before a block can be accepted (since the merkle tree hash depends on all the transactions). Instead, I found startling facts. Like the <a href="https://en.bitcoin.it/wiki/Common_Vulnerabilities_and_Exposures">list of all times where bitcoin (or the software) failed</a>!  it happened way more often than it should’ve. Oftentimes the angle of attack had been found before it was really fully exploited or found by a malignant actor, but there were a lot more than I thought. Also, not everything is on the list (you can find a lot more on the changelog of the bitcoin core <a href="https://github.com/bitcoin/bitcoin/tree/master/doc/release-notes">release notes</a> ). As such, I was suddenly really skeptical of the whole system. I can not believe how many people blindly believe in this software. There should be a competition to this at least.</p>
+
+<p>Also for more an economic or political discussions, try the <a href="https://www.mdavis.xyz/blockchain/">‘make-your-own-adventure/blockchain-adventure’</a> where it links to several different answers clarifying the use and especially the cases where you don’t want to use a blockchain. Most notably for me were the <a href="https://fc18.ifca.ai/preproceedings/6.pdf">injections of illegal data</a> which can make government pose regulations on running a node.</p>
+
+<p>Now back to good facts and visualizations: <br />
+https://www.blockchain.com/charts/transactions-per-second <br />
+https://www.blockchain.com/charts/cost-per-transaction?popcorn=extrabuttery <br />
+https://utxo-stats.com/ <br />
+https://bitcoinfees.earn.com/ <br />
+https://bitcoinfees.github.io/#1m <br />
+https://en.bitcoin.it/wiki/Script <br />
+https://github.com/bitcoin/bips/blob/master/README.mediawiki <br />
+https://bitcoin.esotericnonsense.com/ <br />
+https://mempool.space/</p>
+
+<p>For the next blog post, I will be tackling the Ethereum blockchain!</p>
+
+<p>(Chode snippet)</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Elmore Town (since Elmore City already exists)</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Elmore Town (since Elmore City already exists)</li><li><a class="u-email" href="mailto:elmorevaal@gmail.com">elmorevaal@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ElmoreV"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ElmoreV</span></a></li><li><a href="https://www.twitter.com/MoreVaal"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">MoreVaal</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

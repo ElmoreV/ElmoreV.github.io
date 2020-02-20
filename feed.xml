@@ -1,4 +1,214 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-11-14T21:35:22+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2019-11-14T21:33:06+01:00</published><updated>2019-11-14T21:33:06+01:00</updated><id>http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-20T19:33:35+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Elmore Town (since Elmore City already exists)</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">The Hall effects</title><link href="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html" rel="alternate" type="text/html" title="The Hall effects" /><published>2020-02-17T15:50:06+01:00</published><updated>2020-02-17T15:50:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html">&lt;p&gt;Check
+&lt;img src=&quot;/assets/anim1.webp&quot; alt=&quot;A couple of electrons in a magnetic and electric field&quot; /&gt;
+Introduction&lt;/p&gt;
+
+&lt;p&gt;In the time I have been on my university, I have actually never seen a simulation of charged particles in a field. It either was a &lt;a href=&quot;https://phet.colorado.edu/sims/html/charges-and-fields/latest/charges-and-fields_en.html&quot;&gt;static field of charged particles&lt;/a&gt;, a single electron in a magnetic field &lt;a href=&quot;https://ophysics.com/em7.html&quot;&gt;1&lt;/a&gt;,&lt;a href=&quot;https://techforcurious.website/simulation-of-motion-of-charged-particle-in-electric-field-vpython-tutorial-7-visual-python/&quot;&gt;2&lt;/a&gt; or a paper about the different kind of motions in the &lt;a href=&quot;http://publications.lib.chalmers.se/records/fulltext/250827/250827.pdf&quot;&gt;fusion reactor&lt;/a&gt;. The simulations of a collection of electrons in a magnetic and electric field are never shown.&lt;/p&gt;
+
+&lt;p&gt;It was always a representation of a particle and the solved analytical equations governing the particle already calculated. I was wondering why this was, especially since it actually is very enlightening to calculate all the values yourself. For example, I made a particles in a box simulation with a lot of particles colliding, and could actually measure the Maxwell velocity distribution from that (and really hammered down how to think about temperature and pressure in these systems). Maybe this can be made its own post, but for now I would like to do the same for electrons in a small metallic plate. This effectively means that our problem is 2D, only the x and y directions matter. However, we still put our magnetic field in the third direction, the z-direction.&lt;/p&gt;
+
+&lt;p&gt;First you have to know that charged particles (electrons, protons) in an electric field move towards the electric field in absence of a magnetic field. And also, particles move in a circle with a radius depending on their velocity, depending on the magnetic field.&lt;/p&gt;
+
+&lt;p&gt;This all is described by the Lorentz force:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;m\mathbf{a} = \mathbf{F}= q(\mathbf{E} + \mathbf{v}\times\mathbf{B})&lt;/script&gt;
+
+&lt;p&gt;Say $\mathbf{B} = B_z \hat{z}$, and $E_z = 0$ so that $v_z = constant$:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\left[\begin{matrix}
+\dot{v_x}\\
+\dot{v_y}
+\end{matrix}\right] = \frac{q}{m}\left[\begin{matrix}
+E_x + B_z v_y\\
+E_y - B_z v_x\end{matrix}\right]&lt;/script&gt;
+
+&lt;p&gt;defining $v’_x = (v_x -E_y/B_z)$ and $v’_y = (v_y + E_x/B_z)$ we can find&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\left[\begin{matrix}
+\dot{v'_x}\\
+\dot{v'_y}
+\end{matrix}\right] = \frac{q}{m}\left[\begin{matrix}
+B_z v'_y\\
+- B_z v'_x\end{matrix}\right]&lt;/script&gt;
+
+&lt;p&gt;The most general solution is (we can actually find the solution using a &lt;a href=&quot;https://en.wikipedia.org/wiki/Matrix_differential_equation&quot;&gt;cooler method using matrices&lt;/a&gt;, but thats for another time):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+v_x' &amp;= A\sin(q/m B_z t)\\
+v_y' &amp;= A\cos(q/m B_z t)\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;where $A$ can actually be a complex number.
+We can transform this back to our original problem:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+v_x &amp;= A\sin(q/m B_z t) + E_y/B_z\\
+v_y &amp;= A\cos(q/m B_z t) - E_x/B_z\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;We can find the value for $A=\lvert A\rvert e^{i\phi}$ by finding&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sqrt{(v_x(t=0)-E_y/B_z)^2 +(v_y(t=0)+E_x/B_z)^2} = A&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\phi = \angle(v_x,v_y)&lt;/script&gt;
+
+&lt;p&gt;This means that the values of the position (given a static homogeneous electric field and a static magnetic field):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+x(t) &amp;= -\frac{Am}{qB_z}\cos(\frac{q}{m} B_z t) + E_y/B_z t + C_1\\
+y(t) &amp;= \frac{Am}{qB_z}\sin(q/m B_z t) - E_x/B_z t+ C_2\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;where $C_1 = x_0 + \frac{Am}{qB_z}\cos(\phi)$ and $C_2 = y_0 - \frac{Am}{qB_z}\sin(\phi) $&lt;/p&gt;
+
+&lt;h1&gt;Simulation&lt;/h1&gt;
+
+&lt;p&gt;A naive simulation method would be to input the (perpendicular) magnetic field strength $B_z$ and the electric field $E_x,E_y$ and just integrate using LeapFrog (a symplectic integration method, meaning that there will be conservation of energy without external forces if the time step is small enough).
+This is given as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+a_{i} &amp;= F(x_i)/m_i\\
+v_{i+1/2} &amp;= v_{i-1/2} + a_{i} *\Delta t\\
+x_{i+1} &amp;= x_{i} + v_{i+1/2} *\Delta t\\
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;with time step $\Delta t$.&lt;/p&gt;
+
+&lt;p&gt;See the result:…&lt;/p&gt;
+
+&lt;p&gt;This does not work: it diverges from the analytical solution. A better solution would be the Boris algorithm:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{align*}
+q' = \Delta t \frac{q}{2m}\\
+\mathbf{h} = q'*\mathbf{B}_i\\
+u = \mathbf{v}_{i-1/} + q'*\mathbf{E}\\
+s= 2*\mathbf{h}/(1+\lvert h\rvert^2)\\
+u'= u+(\mathbf{u}+(u\times h)) \times s\\
+v_{i+1/2} = u'+ q'*E_i\\
+x_{i+1} = x_i + v_{i+1/2}*\Delta t
+\end{align*}&lt;/script&gt;
+
+&lt;p&gt;A big longer but extremely stable up to an enormous scale.\&lt;/p&gt;
+
+&lt;p&gt;Now for the surprising simulation results:
+Bleep bloop
+Insert circular
+Insert the quadratic speedup in only electric field
+Insert electric field and magnetic field: show helical behaviour!!
+See if I can speed up the simulation some way..
+See if I can make the simulation better.&lt;/p&gt;
+
+&lt;p&gt;Appendix:&lt;/p&gt;
+
+&lt;p&gt;Cooler solution using matrices:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\left[\begin{matrix}
+\dot{v'_x}\\
+\dot{v'_y}
+\end{matrix}\right] = \frac{q}{m}\left[\begin{matrix}
+B_z v'_y\\
+- B_z v'_x\end{matrix}\right]=\frac{q}{m}\left[\begin{matrix}
+0 &amp;\frac{qB_z}{m}\\
+-\frac{qB_z}{m} &amp;0
+\end{matrix}\right]\left[\begin{matrix}
+v'_x\\
+v'_y\end{matrix}\right]= \mathbf{A} \mathbf{v'} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Finding the eigenvalues of the matrix $\mathbf{A}$ gives us $\lambda =\pm \frac{qB_z}{m}i$
+Find the eigenvector corresponding to $\lambda_\pm = \pm\frac{qB_z}{m}i$:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+\mathbf{u}_+ &amp;= \frac{1}{\sqrt{2}}\left[\begin{matrix}-i\\1\end{matrix}\right]\\
+\mathbf{u}_- &amp;= \frac{1}{\sqrt{2}}\left[\begin{matrix}+i\\1\end{matrix}\right]\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Giving us the final solution (we absorb the factor $\sqrt{2}$ in $c_1,c_2$:
+&lt;script type=&quot;math/tex&quot;&gt;\mathbf{v} = c_1 \left[\begin{matrix}-i\\1\end{matrix}\right] e^{\frac{qB_z}{m}it}+ c_2 \left[\begin{matrix}+i\\1\end{matrix}\right] e^{-\frac{qB_z}{m}it}&lt;/script&gt;
+Now we need to solve for this, but before we do that, we enforce that the solution for $\mathbf{v}$ is not complex.&lt;/p&gt;
+
+&lt;p&gt;Do the math…&lt;/p&gt;
+
+&lt;p&gt;Now we find, as above:
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+v'_x &amp;= A\sin(q/m B_z t)\\
+v'_y &amp;= A\cos(q/m B_z t)\end{align*} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Moreover:&lt;/p&gt;
+
+&lt;p&gt;The Matrix of $\mathbf{v}\times\mathbf{B}$ can be written as a matrix multiplication $B\mathbf{v}$ where $B$ is a matrix:&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+B=\left[\begin{matrix}
+0 &amp; B_z &amp; -B_y\\
+-B_z &amp; 0 &amp; B_x\\
+B_y &amp; -B_x &amp; 0
+\end{matrix}\right] %]]&gt;&lt;/script&gt;
+but there is no inverse…&lt;/p&gt;
+
+&lt;p&gt;Solution to the equations when $B_z=0$:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{x}(t) = \frac{\mathbf{E}}{2}t^2 + \mathbf{v}_0t + \mathbf{x}_0&lt;/script&gt;
+
+&lt;p&gt;Text&lt;/p&gt;</content><author><name></name></author><summary type="html">Check Introduction</summary></entry><entry><title type="html">Continuous Actions</title><link href="http://localhost:4000/2020/02/12/Continuous-actions.html" rel="alternate" type="text/html" title="Continuous Actions" /><published>2020-02-12T00:00:00+01:00</published><updated>2020-02-12T00:00:00+01:00</updated><id>http://localhost:4000/2020/02/12/Continuous-actions</id><content type="html" xml:base="http://localhost:4000/2020/02/12/Continuous-actions.html">&lt;p&gt;sdf&lt;/p&gt;</content><author><name></name></author><summary type="html">sdf</summary></entry><entry><title type="html">Bitcoin as explained by other people (read time: 6-10 hours)</title><link href="http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html" rel="alternate" type="text/html" title="Bitcoin as explained by other people (read time: 6-10 hours)" /><published>2020-02-07T23:04:06+01:00</published><updated>2020-02-07T23:04:06+01:00</updated><id>http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin</id><content type="html" xml:base="http://localhost:4000/bitcoin/cryptocurrency/2020/02/07/Explaining-bitcoin.html">&lt;p&gt;Hi there,&lt;/p&gt;
+
+&lt;p&gt;I have taken it upon myself to start a blog. Not necessarily to create a big cult following, but to remind myself of the things I did and in case I forget something, to refresh my memory by detailing how I learned it.&lt;br /&gt;
+In this post: I learned to love the Bitcoin concept in just a weekend. This was really eye-opening to me, since to me it seemed that bitcoin was a sluggish but global cryptocurrency, but there is way more than meets the eye. Of course, at first I started of with what I consider to be the &lt;a href=&quot;https://www.youtube.com/watch?v=JyxRH18YlpA&quot;&gt;best high-level explanation you can imagine from the Youtube Channel Computerphile&lt;/a&gt;. And after that a good technical dive into what it really means to have a bitcoin (and what terms like ‘cryptography’ and ‘digital signature’ really mean) from &lt;a href=&quot;https://www.youtube.com/watch?v=bBC-nXj3Ng4&quot;&gt;3Blue1Brown&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is probably sufficient to read the &lt;a href=&quot;https://whitepaperdatabase.com/bitcoin-btc-whitepaper/&quot;&gt;bitcoin whitepaper&lt;/a&gt;, where Satoshi Nakamote, the pseudonym of the creator(s) outlines his idea and his vision. However, there are definitely some missing details in there. For example, I was wondering how you would take a ‘hash of a transaction’? What would you include and what would be left out? The real answer can be easily found in the source code (more on that later), but the short answer was: ‘Everything necessary to fully identify the transaction, and then serialize it into a consistent and universally computer-readable format’.&lt;/p&gt;
+
+&lt;p&gt;To get more information about the practical safety of the bitcoin protocol, an interesting entry point are the &lt;a href=&quot;https://nakamotostudies.org/emails/&quot;&gt;early email discussions with Nakamoto&lt;/a&gt;, where other computer scientists discussed the pitfalls and concerns about the safety of the bitcoin protocol. The answers are clear and well-versed. So much so, that eventually, 6 years later, a split happened in the Bitcoin community: should we respect Satoshi’s initial brilliant ideas or try to improve upon the initial protocol?&lt;/p&gt;
+
+&lt;p&gt;If you want to see a bitcoin transaction in action, I would look to these youtube videos from Youtube Channel 402PaymentRequired, starting with&lt;a href=&quot;https://www.youtube.com/watch?v=BQZXqmWSICM&quot;&gt; Video #9&lt;/a&gt; until #18. The tutorial is given through an imaginary conversation, so this may not be to your liking.&lt;/p&gt;
+
+&lt;p&gt;Now it is time to dive into the real C++ code. I would recommend looking at &lt;a href=&quot;https://sourceforge.net/p/bitcoin/code/1/&quot;&gt;Satoshi’s original code&lt;/a&gt; for running a full node that adheres and maintains the Bitcoin protocol. Download the source code and open it in your favorite C++ code editor. Visual Code seems to be the rage right now. It really is beautiful code, so I understand why other computer scientists got excited by it.&lt;/p&gt;
+
+&lt;p&gt;While reading through the code, some handy references are: public-private key encryption (see e.g. the &lt;a href=&quot;https://en.wikipedia.org/wiki/Pretty_Good_Privacy#/media/File:PGP_diagram.svg&quot;&gt;Figure here&lt;/a&gt; ),  &lt;a href=&quot;https://security.stackexchange.com/questions/14479/what-does-key-signing-mean&quot;&gt;digital signatures&lt;/a&gt; and knowing that the code uses OpenSSL for the encryption and BerkeleyDB for the database managing. 
+Fun fact, that explanation of digital signatures was actually explaining it for the signing of public key of someone else. However, you can sign any message this way! By this, the receiver can make sure the message (the public encryption key or a random photo of a cat) came from who it said it came!&lt;/p&gt;
+
+&lt;p&gt;You can also look at the consensus &lt;a href=&quot;https://github.com/bitcoin/bitcoin&quot;&gt;current bitcoin code&lt;/a&gt;, but it is a big bloated. It also included SegWit (segregated witnesses) and way more upgraded. From 2015 on, the big changes are maintained well on &lt;a href=&quot;https://bitcoincore.org/en/blog/&quot;&gt;their blog&lt;/a&gt;. I haven’t dived deep into all the changes that have happened since the release, but big ones are: the introduction of compressed public keys, multi-signature transactions, segregated witnesses, better coin tracking, the OP_RETURN message use and creating a second (fast) transaction layer on top of the blockchain: the Lightning Network.&lt;/p&gt;
+
+&lt;p&gt;Now came the bad news: I was looking for some edge cases in the old code and thought of one. I found in the ProcessMessages (where the network messages are handled) that when a new ‘I found a block proof-of-work!’ message was given, the block was analyzed for some simple checks and it was checked if there were transactions and if there was a coinbase (the first transaction in a block that gives the miner the mining reward). I thought, there was no mention of any money checks. How can it check if a coin is spent. So I started looking. I found it in the ‘tx’ (transaction) message, since all transactions need to be published before a block can be accepted (since the merkle tree hash depends on all the transactions). Instead, I found startling facts. Like the &lt;a href=&quot;https://en.bitcoin.it/wiki/Common_Vulnerabilities_and_Exposures&quot;&gt;list of all times where bitcoin (or the software) failed&lt;/a&gt;!  it happened way more often than it should’ve. Oftentimes the angle of attack had been found before it was really fully exploited or found by a malignant actor, but there were a lot more than I thought. Also, not everything is on the list (you can find a lot more on the changelog of the bitcoin core &lt;a href=&quot;https://github.com/bitcoin/bitcoin/tree/master/doc/release-notes&quot;&gt;release notes&lt;/a&gt; ). As such, I was suddenly really skeptical of the whole system. I can not believe how many people blindly believe in this software. There should be a competition to this at least.&lt;/p&gt;
+
+&lt;p&gt;Also for more an economic or political discussions, try the &lt;a href=&quot;https://www.mdavis.xyz/blockchain/&quot;&gt;‘make-your-own-adventure/blockchain-adventure’&lt;/a&gt; where it links to several different answers clarifying the use and especially the cases where you don’t want to use a blockchain. Most notably for me were the &lt;a href=&quot;https://fc18.ifca.ai/preproceedings/6.pdf&quot;&gt;injections of illegal data&lt;/a&gt; which can make government pose regulations on running a node.&lt;/p&gt;
+
+&lt;p&gt;Now back to good facts and visualizations: &lt;br /&gt;
+https://www.blockchain.com/charts/transactions-per-second &lt;br /&gt;
+https://www.blockchain.com/charts/cost-per-transaction?popcorn=extrabuttery &lt;br /&gt;
+https://utxo-stats.com/ &lt;br /&gt;
+https://bitcoinfees.earn.com/ &lt;br /&gt;
+https://bitcoinfees.github.io/#1m &lt;br /&gt;
+https://en.bitcoin.it/wiki/Script &lt;br /&gt;
+https://github.com/bitcoin/bips/blob/master/README.mediawiki &lt;br /&gt;
+https://bitcoin.esotericnonsense.com/ &lt;br /&gt;
+https://mempool.space/&lt;/p&gt;
+
+&lt;p&gt;For the next blog post, I will be tackling the Ethereum blockchain!&lt;/p&gt;
+
+&lt;p&gt;(Chode snippet)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name></name></author><summary type="html">Hi there,</summary></entry><entry><title type="html">Mathjax</title><link href="http://localhost:4000/mathjax/jax/2020/02/07/Testing-mathjax.html" rel="alternate" type="text/html" title="Mathjax" /><published>2020-02-07T23:04:06+01:00</published><updated>2020-02-07T23:04:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/07/Testing-mathjax</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/07/Testing-mathjax.html">&lt;p&gt;Hi there,&lt;/p&gt;
+
+&lt;div&gt;
+$$\sum_{n=1}^\infty 1/n^2 = \frac{\pi^2}{6}$$
+&lt;/div&gt;
+
+&lt;p&gt;For the next blog post, I will be tackling the Ethereum blockchain!&lt;/p&gt;
+
+&lt;p&gt;(Chode snippet)&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name></name></author><summary type="html">Hi there,</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2019-11-14T21:33:06+01:00</published><updated>2019-11-14T21:33:06+01:00</updated><id>http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2019/11/14/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;I have to do this by opening git bash and running &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle exec jekyll server&lt;/code&gt; with ruby on rails and bundle.&lt;/p&gt;
 
 &lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
 
