@@ -1,4 +1,301 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-20T19:33:35+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Elmore Town (since Elmore City already exists)</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">The Hall effects</title><link href="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html" rel="alternate" type="text/html" title="The Hall effects" /><published>2020-02-17T15:50:06+01:00</published><updated>2020-02-17T15:50:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html">&lt;p&gt;Check
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-23T20:10:28+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Elmore Town (since Elmore City already exists)</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Changing simulation dimensions - what am I actually simulating?</title><link href="http://localhost:4000/mathjax/jax/2020/02/23/Changing-dimensions-a-step-by-step-guide.html" rel="alternate" type="text/html" title="Changing simulation dimensions - what am I actually simulating?" /><published>2020-02-23T11:31:06+01:00</published><updated>2020-02-23T11:31:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/23/Changing-dimensions-a-step-by-step-guide</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/23/Changing-dimensions-a-step-by-step-guide.html">&lt;p&gt;$\newcommand{\ket}[1]{\rvert #1 \rangle}$
+$\newcommand{\bra}[1]{\langle #1 \lvert}$
+$\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$
+$\newcommand{\unit}[1]{\mathrm{\,#1}}$&lt;/p&gt;
+&lt;h1&gt; Why would you want to scale the simulation? &lt;/h1&gt;
+
+&lt;p&gt;Hey, welcome to another side adventure where we’ll be looking at a simulation trick: scaling variables. Why would we do this? The most important reason is: it makes simulating easier, since you’ll be working with numbers around one to 100. This means that adjusting parameters to see interesting physics is easier and you don’t have to worry immediately about the accuracy: with normal numbers (like 1 and 100) it is easier to verify the simulation calculations you’re making. Afterwards, you calculate the scaling you have used and verify it with the physical parameters. However, I’ve been stumped a lot by how to actually find the scaling parameters.&lt;/p&gt;
+
+&lt;h1&gt; An interesting system to scale - charged particle simulation &lt;/h1&gt;
+
+&lt;p&gt;Take our charged particle simulator we build to explain the Hall effect. It uses the following equations of motion for each particle i:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;m_i\mathbf{a}_i = \mathbf{F}_i = \sum_{j\neq i} k_e \frac{q_j q_i}{r_{ij}^2}\mathbf{r}_{ij} + q_i (\mathbf{E}(\mathbf{x}_i) + \mathbf{v}_i\times \mathbf{B}(\mathbf{x}_i))&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{a}_i = \frac{d\mathbf{v}_i}{dt}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{v}_i = \frac{d\mathbf{x}_i}{dt}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{r}_{ij} = \mathbf{x}_i - \mathbf{x}_j&lt;/script&gt;
+
+&lt;p&gt;However, in our simulations, we did not use the actual values for $q_i,k_e,m_i$, we used $k_e = 10^5$ and $q=m=1$ for all particles, while for physical free electrons they should be $k_e \approx 9\cdot 10^9, m\approx 9.1\cdot 10^{-31}$ and $q\approx 1.6\cdot 10^{-19}$.&lt;/p&gt;
+
+&lt;p&gt;Instead of changing these parameters, we could also be scaling all other physical quantities ($x,v,a,t,F,E,B$) in our simulation so that the numerical values that the forces take are tractable, such as taking $E=\frac{1}{q} \tilde{E}$, which would cause the term $qE$ to be $\sim 1$. What we want is a systemic way to find out the right scaling laws. Let’s put this into symbols. The values in our simulation are denoted by $\tilde{\cdot}$ while the real values are given as normal. The parameters we changed can be described by:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+c_q q&amp;=\tilde{q}\\
+c_m m&amp;=\tilde{m}\\
+c_k k_e &amp;= \tilde{k}_e
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;And we want to find the scaling laws of:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+c_x x &amp;= \tilde{x}\\
+c_t t &amp;= \tilde{t}\\
+c_B B &amp;= \tilde{B}\\
+c_E E &amp;= \tilde{E}
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Let us look at the equation $F=ma$, which in our simulation will be simulated as $\tilde{F} = \tilde{m}\tilde{a}$ and suppose the real mass of the object is $m=3$ and we use in our simulation $\tilde{m} = 1$, then $c_m = 1/3$. Then&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\tilde{F} = \tilde{m}\tilde{a}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}c_FF = c_m c_a ma\end{equation}\label{eq:examp1}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}c_F = c_m c_a\end{equation}\label{eq:examp2}&lt;/script&gt;
+
+&lt;p&gt;However, since $\frac{d^2x}{dt^2}=a$ and $\tilde{a} = \frac{d^2\tilde{x}}{d\tilde{t}^2} = \frac{c_x}{c_t^2} \frac{d^2 x}{dt^2} = \frac{c_x}{c_t^2} a$ we find that&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;c_a = c_x/c_t^2&lt;/script&gt;.&lt;/p&gt;
+
+&lt;h1&gt; Dimensional analysis &lt;/h1&gt;
+
+&lt;p&gt;In the realm of physics, a very easy way to check if your calculation is correct is by looking at the units of both sides of the equation. The units of each term on the rhs (right hand side) (where term means every group of variables that is separated by a ‘$+$’) must equal the units of each term on the lhs (left hand side). It is a bit of a stretch, but since our equations must hold whether or not every term is present, each term on the rhs must equal that on the lhs following Equations $\eqref{eq:examp1}$ and $\eqref{eq:examp2}$&lt;/p&gt;
+
+&lt;p&gt;Now look at another example from our simulation - the coloumb force:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\tilde{m}\tilde{\mathbf{a}}_i = -\tilde{k}_e \frac{\tilde{q}_i\tilde{q}_j}{\tilde{r}_{ij}^2}\tilde{\mathbf{r}}_{ij}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;c_m c_a m_ia_i = -c_{k}k_e \frac{c_q^2q_iq_j}{c_x^3r_{ij}^3}c_x\mathbf{r}_{ij}&lt;/script&gt;
+
+&lt;p&gt;but since $m_ia_i = -k_e \frac{q_iq_j}{r_{ij}^3}\mathbf{r}_{ij}$ in absence of other forces&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;c_m c_a = c_{k} \frac{c_q^2}{c_x^2}&lt;/script&gt;
+
+&lt;p&gt;and because we already saw $c_a = \frac{c_x}{c_t^2}$ we conclude&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;c_m \frac{c_x}{c_t^2} = c_k \frac{c_q^2}{c_x^2}&lt;/script&gt;
+
+&lt;p&gt;with which we have found one of the relations we’re going to use.&lt;/p&gt;
+
+&lt;h1&gt; Finding the actual relations &lt;/h1&gt;
+
+&lt;p&gt;We can continue doing this for all terms in the relations:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{c_x}{c_t^2} = \frac{c_k}{c_m} \frac{c_q^2}{c_x^2} = \frac{c_q}{c_m} c_E = \frac{c_q}{c_m} \frac{c_x}{c_t} c_B&lt;/script&gt;
+
+&lt;p&gt;Let’s take four equations written out (with the knowns on the rhs and the unknowns on the lhs):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+\frac{c_x^3}{c_t^2} &amp;= \frac{c_k c_q^2}{c_m} \\
+\frac{c_x}{c_t^2 c_E} &amp;= \frac{c_q}{c_m} \\
+\frac{1}{c_t c_B} &amp;= \frac{c_q}{c_m}\\ 
+c_Ec_x^2 &amp;= c_k c_q\\
+\frac{c_x^3}{c_t}c_B &amp;= c_k c_q\\
+\frac{c_E c_t}{c_B c_x} &amp;= 1
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;These are all formulas consisting for multiplication and division. This often happens with physical formulas and makes our lives a bit easier, since we can make linear equations of these by defining them in logarithmic term as $c’&lt;em&gt;{\chi} = \log(c&lt;/em&gt;{\chi})$. This reduces to&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align} \label{eq:lin_eqs}
+3c'_x - 2c'_t &amp;= c'_k+2c'_q - c'_m \\
+c'_x - 2c'_t - c'_E &amp;= c'_q - c'_m \\
+-c'_t - c'_B  &amp;= c'_q - c'_m\\ 
+c'_E+2c'_x &amp;= c'_k + c'_q\\
+3c'_x - c'_t + c'_B &amp;= c'_k + c'_q\\
+c'_E + c'_t - c'_B - c'_x &amp;= 0
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Let’s look at the rhs first. In our simulation, we use $c_k=\frac{10^5}{9\cdot 10^9},c_q=\frac{1}{1.6\cdot 10^{-19}},c_m=\frac{1}{9.1\cdot 10^{-31}}$. This means we can calculte all rhs. We can actually do this in vector form and do this using a matrix multiplication. This will make it easier to redo the calculation if we decide to change these parameters.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+b = Bc'_{known} =  \left[\begin{matrix} c'_k + 2c'_q - c'_m\\
+c'_q - c'_m\\
+c'_q - c'_m\\
+c'_k + c'_q\\
+c'_k + c'_q\\
+0
+\end{matrix}\right] = \left[\begin{matrix} 1&amp;2&amp;-1\\
+0&amp;1&amp;-1\\
+0&amp;1&amp;-1\\
+1&amp; 1 &amp; 0\\
+1&amp; 1 &amp; 0\\
+0&amp;0&amp;0
+\end{matrix}\right] \left[\begin{matrix}c'_k\\ c'_q\\ c'_m\end{matrix}\right] %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;We do the same vectorization of the lhs&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+Ac'_{unknown} = \left[\begin{matrix}
+3&amp;-2&amp;0&amp;0\\
+1&amp; -2 &amp; -1 &amp;0\\
+0&amp;-1&amp;0 &amp; -1\\
+2&amp; 0 &amp; 1 &amp; 0\\
+3&amp; -1 &amp; 0&amp;1\\
+-1&amp;1&amp;1&amp;-1
+\end{matrix}\right]\left[\begin{matrix}c'_x\\
+c'_t\\
+c'_E\\
+c'_B
+\end{matrix}\right] = b %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;and we can really simply put $\eqref{eq:lin_eqs}$ in the following matrix problem&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Ac'_{unknown} = Bc'_{known}&lt;/script&gt;
+
+&lt;p&gt;we can set up the parameters do this and find that we have 4 unknowns and 3 linearly independent equations! That means we get to choose one scaling parameter extra! I have chosen that the magnetic field scales as in real life $c_B =1 $. You can recreate the new matrices by moving all terms using $c_B$ from the lhs to the rhs.&lt;/p&gt;
+
+&lt;p&gt;We now have 3 unknowns, so we pick 3 linear independent equations and solve the problem (however, we can use all the rows and let the algorithm decide which ones to use). Below the code to do this in Python with NumPy:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#A*c_unkown = b = B*c_known
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#input value / real value
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cp_k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;9e9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cp_q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.6e-19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cp_m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;9.1e-31&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cp_B&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;c_vec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cp_k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cp_q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cp_m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cp_B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_vec&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#If the condition number is too large, the matrix often has too low rank
+#to solve Ax=b. It should be around ~1 to 10
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linalg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cond&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1e2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Bad matrix: the problem cannot be solved.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;#If you know the linear independent rows
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;exact_result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linalg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#This should match the above result
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exact_result2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linalg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lstsq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rcond&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;c1&quot;&gt;#Print results
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Result 1: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exact_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Result 2: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exact_result2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s a_real=  a_sim'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exact_result2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a_real = &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s a_sim'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exact_result2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;which outputs&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Result 1: [19.25476617 25.89275033 -6.63798416]
+Result 2: [19.25476617 25.89275033 -6.63798416]
+[2.30270710e+08 1.75824176e+11 1.30966466e-03] a_real=  a_sim
+a_real = [4.34271472e-09 5.68750000e-12 7.63554236e+02] a_sim&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+c_x &amp;= 2.3\cdot 10^8\\
+c_t &amp;= 1.76 \cdot 10^{11}\\
+c_E &amp;= 1.31 \cdot 10^{-3}
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;in other words, a unit of 1 simulation meter is in reality $4.3\unit{nm}$, 1 simulation second is $5.6\unit{fs}$ and an electric field of 1 simulation volt per simulation meter is $760 \frac{V}{m}$. That’s good to know!&lt;/p&gt;
+
+&lt;p&gt;#Coming back to our example: scaling the values to simulation values is the same as changing the dimensions where $x$ is in meters, $\tilde{x}$ is in unit ‘simulation meters’ $m^{sim}$ and $c_x$ has the unit $\frac{m}{m^{sim}}$ ‘meters per simulation meter’.&lt;/p&gt;</content><author><name></name></author><summary type="html">$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$ Why would you want to scale the simulation?</summary></entry><entry><title type="html">The Landau Levels</title><link href="http://localhost:4000/mathjax/jax/2020/02/21/Landau-levels.html" rel="alternate" type="text/html" title="The Landau Levels" /><published>2020-02-21T09:42:06+01:00</published><updated>2020-02-21T09:42:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/21/Landau-levels</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/21/Landau-levels.html">&lt;p&gt;The Hamiltonian:&lt;/p&gt;
+
+&lt;p&gt;The Hamiltonian for a (single) particle in an EM field is:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{H} = \frac{1}{2m}[(\mathbf{p}-q\mathbf{A}(\mathbf{r},t))^2 + q\phi(\mathbf{r},t)]&lt;/script&gt;
+
+&lt;p&gt;where $m$ is the mass of the particle, $\mathbf{p} = -i\hbar\nabla$, $\mathbf{A}$ is the vector potential so that magnetic field $\mathbf{B} = \nabla \times \mathbf{A}$, $q$ the electric charge for the particle (and $q=-e$ for an electron), and $\phi$ the electric potential such that the electric field $\mathbf{E} = -\nabla \phi -\frac{\partial A}{\partial t}$ .&lt;/p&gt;
+
+&lt;p&gt;The part $(\mathbf{p}-q\mathbf{A}(\mathbf{r},t))^2$ can be written out as :&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{p}^2 - q\mathbf{p}\cdot \mathbf{A} - q\mathbf{A}\cdot \mathbf{p} + q^2 \mathbf{A}^2&lt;/script&gt;
+
+&lt;p&gt;Under some test function $\psi$, we can see that
+&lt;script type=&quot;math/tex&quot;&gt;- q\mathbf{p}\cdot \mathbf{A}\psi - q\mathbf{A}\cdot \mathbf{p}\psi  = i\hbar q\nabla \cdot (A\phi) +i\hbar q A\cdot (\nabla \phi)&lt;/script&gt;
+&lt;script type=&quot;math/tex&quot;&gt;=i\hbar q(\nabla \cdot A)\phi + i\hbar q (\nabla \phi)\cdot A +i\hbar q A\cdot (\nabla \phi)&lt;/script&gt;
+&lt;script type=&quot;math/tex&quot;&gt;= [-q(\mathbf{p}\cdot \mathbf{A}) - 2q \mathbf{A}\cdot\mathbf{p} ]&lt;/script&gt;
+so that finally:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbf{p}^2 - q(\mathbf{p}\cdot \mathbf{A}) - 2q\mathbf{A}\cdot \mathbf{p} + q^2 \mathbf{A}^2&lt;/script&gt;
+
+&lt;p&gt;Now let’s say we have $\mathbf{B}=B\hat{z}$, then we have electric potential $\phi = 0$ and for example vector potential $\mathbf{A} = [-B/2y,B/2x,0]$. Notice that $\nabla \cdot \mathbf{A} =0 $&lt;/p&gt;
+
+&lt;p&gt;let’s fill it in:
+&lt;script type=&quot;math/tex&quot;&gt;\hat{H} = \frac{1}{2m}[\mathbf{p}^2 - q(\mathbf{p}\cdot \mathbf{A}) - 2q\mathbf{A}\cdot \mathbf{p} + q^2 \mathbf{A}^2]+ q\phi(\mathbf{r},t)]&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;= \frac{1}{2m}[-\hbar \nabla^2 + i\hbar q(\nabla\cdot \mathbf{A}) +2i\hbar q\mathbf{A}\cdot \nabla + q^2 \frac{B^2}{4}(x^2 +y^2)]&lt;/script&gt;
+
+&lt;p&gt;now trying to solve the Schrodinger equation:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;2mE\psi = -\hbar \nabla^2 \psi +2i\hbar q \mathbf{A} \cdot (\nabla \psi) + q^2 \frac{B^2}{4} (x^2 + y^2) \psi&lt;/script&gt;
+
+&lt;p&gt;we decompose $\psi(x,y,z)$ into $R(x,y)Z(z)$ and find that $Z(z)$ will be a solution of $\mu = p_z Z(z)$ and&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(2mE-\mu)R(x,y) = -\hbar \nabla_{x,y}^2 R(x,y) +2i\hbar q \mathbf{A} \cdot (\nabla_{x,y} R(x,y)) + q^2 \frac{B^2}{4} (x^2 + y^2) R(x,y)&lt;/script&gt;
+
+&lt;p&gt;we use a coordinate transformation to polar coordinates $(x,y) = (r\cos(\theta),r\sin(\theta))$ such that $\nabla^2 f(r,\theta) = \nabla_r^2 f(r,\theta) + \frac{1}{r} \nabla_r f(r,\theta) +\frac{1}{r^2} \nabla_\theta^2 f(r,\theta)$ and $\nabla f(r,\theta) = \nabla_r f(r,\theta)\hat{r} + \frac{1}{r} \nabla_\theta f(r,\theta)\hat{\theta}$ and $A = [0,\frac{1}{2}Br,0]$&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(2mE-\mu)\Psi(r,\theta) = -\hbar \nabla_{r,\theta}^2 \Psi(x,y) +2i\hbar q \mathbf{A} \cdot (\nabla_{r,\theta} \Psi(r,\theta)) + q^2 \frac{B^2r^2}{4} \Psi(r,\theta)&lt;/script&gt;
+
+&lt;p&gt;we immediately think: this can be decomposed into $\Psi(r,\theta) = R(r)\Theta(\theta)$&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(2mE-\mu) = [-\frac{\hbar}{R} \frac{\partial^2}{\partial r^2} R(r) - \frac{\hbar}{r R}\frac{\partial}{\partial r} R + \frac{q^2 B^2 r^2}{4}] + [2i\hbar q \frac{B}{2\Theta}\frac{\partial}{\partial \theta}\Theta + \frac{1}{r^2 \Theta} \frac{\partial^2}{\partial \theta ^2 }\Theta]&lt;/script&gt;</content><author><name></name></author><summary type="html">The Hamiltonian:</summary></entry><entry><title type="html">Handy QM equations</title><link href="http://localhost:4000/mathjax/jax/2020/02/21/Compendium-of-handy-equations-in-QM.html" rel="alternate" type="text/html" title="Handy QM equations" /><published>2020-02-21T09:42:06+01:00</published><updated>2020-02-21T09:42:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/21/Compendium-of-handy-equations-in-QM</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/21/Compendium-of-handy-equations-in-QM.html">&lt;p&gt;$\newcommand{\ket}[1]{\rvert #1 \rangle}$
+$\newcommand{\bra}[1]{\langle #1 \lvert}$
+$\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$&lt;/p&gt;
+
+&lt;h1&gt;Constants and values&lt;/h1&gt;
+&lt;p&gt;Flux quantum:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Phi_0 = 2\pi \hbar/e&lt;/script&gt;
+
+&lt;h1&gt;The wave function and probabilities &lt;/h1&gt;
+
+&lt;h1&gt;The Hamiltonian&lt;/h1&gt;
+
+&lt;h1&gt;Operators&lt;/h1&gt;
+
+&lt;h1&gt;Commutation&lt;/h1&gt;
+
+&lt;h1&gt;Analytical solutions&lt;/h1&gt;
+
+&lt;h1&gt;Gauge invariance&lt;/h1&gt;
+
+&lt;h1&gt;Calculation tools of quantum mechanics &lt;/h1&gt;
+&lt;p&gt;Adiabatic theorem:&lt;br /&gt;
+&lt;em&gt;If we place a system in a non-degenerate eigenstate $\ket{n}$ and vary the parameters of the Hamiltonian sufficiently slowly, the system will stay in the eigenstate $\ket{n}$ if no level-crossings are encountered.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Berry connection $\mathcal{A}_j(\lambda)$(under adiabatic change of parameters $\lambda^j$ of eigenstate $\ket{n}(\lambda(t))$ with constant energy $E_n(\lambda(t)) = 0$)&lt;a href=&quot;https://arxiv.org/pdf/1606.06687.pdf&quot;&gt;ref&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{A}_j(\lambda) = -i\bra{n}\frac{\partial \ket{n}}{\partial \lambda^j}&lt;/script&gt;
+
+&lt;p&gt;Berry phase: the phase acquired (next to the energy dynamical phase) by changing parameters $\lambda^j$ adiabatically:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;e^{i\gamma} = \exp(-i\oint_C\mathcal{A}_j (\lambda)d\lambda^j)&lt;/script&gt;
+
+&lt;p&gt;‘Gauge’ invariance of Berry connection (with starting state $\ket{n’} = e^{i\omega(\lambda)}\ket{n}$:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{A}'_j(\lambda) = \mathcal{A}_j(\lambda) + \frac{\partial \omega(\lambda)}{\partial \lambda^j}&lt;/script&gt;
+
+&lt;p&gt;Berry curvature (all physical phase information):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathcal{F}_{ij}= \ptpt{\mathcal{A}_j}{\lambda^j}&lt;/script&gt;
+
+&lt;p&gt;Berry curvature quantization theorem:&lt;br /&gt;
+&lt;em&gt;For any closed surface $S$, we find that $\oint_S \mathcal{F}_{ij} dS^{ij} =2 \pi k$ for $k\in\mathcal{Z}$&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1&gt;Other useful theorems of quantum mechanics &lt;/h1&gt;</content><author><name></name></author><summary type="html">$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$</summary></entry><entry><title type="html">The Hall effects</title><link href="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html" rel="alternate" type="text/html" title="The Hall effects" /><published>2020-02-17T15:50:06+01:00</published><updated>2020-02-17T15:50:06+01:00</updated><id>http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects</id><content type="html" xml:base="http://localhost:4000/mathjax/jax/2020/02/17/Hall-effects.html">&lt;p&gt;Check
 &lt;img src=&quot;/assets/anim1.webp&quot; alt=&quot;A couple of electrons in a magnetic and electric field&quot; /&gt;
 Introduction&lt;/p&gt;
 
