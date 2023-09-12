@@ -1,4 +1,4 @@
-<b>Hi, welcome to the code of my [site](ElmoreV.github.io), which is hosted on [GitHub](https://github.com/ElmoreV/ElmoreV.github.io)
+<b>Hi, welcome to the code of my site.
 
 To set-up, go to: https://jekyllrb.com/docs/
 
