@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Handy QM equations | Elmoreapolis</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Handy QM equations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\expval}[1]{\langle #1 \rangle}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<meta property="og:description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\expval}[1]{\langle #1 \rangle}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<link rel="canonical" href="http://localhost:4000/quantum_mechanics/summary/2020/02/21/Compendium-of-handy-equations-in-QM.html" />
+<meta property="og:url" content="http://localhost:4000/quantum_mechanics/summary/2020/02/21/Compendium-of-handy-equations-in-QM.html" />
+<meta property="og:site_name" content="Elmoreapolis" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-21T09:42:06+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Handy QM equations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-02-21T09:42:06+01:00","datePublished":"2020-02-21T09:42:06+01:00","description":"$\\newcommand{\\ket}[1]{\\rvert #1 \\rangle}$ $\\newcommand{\\bra}[1]{\\langle #1 \\lvert}$ $\\newcommand{\\expval}[1]{\\langle #1 \\rangle}$ $\\newcommand{\\ptpt}[2]{\\frac{\\partial #1}{\\partial #2}}$ $\\newcommand{\\unit}[1]{\\mathrm{\\,#1}}$","headline":"Handy QM equations","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/quantum_mechanics/summary/2020/02/21/Compendium-of-handy-equations-in-QM.html"},"url":"http://localhost:4000/quantum_mechanics/summary/2020/02/21/Compendium-of-handy-equations-in-QM.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Elmoreapolis" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Elmoreapolis</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+     TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      tagSide: "right"
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+<h1>Handy QM equations</h1>
+<p>21 Feb 2020 - </p>
+
+<p>$\newcommand{\ket}[1]{\rvert #1 \rangle}$
+$\newcommand{\bra}[1]{\langle #1 \lvert}$
+$\newcommand{\expval}[1]{\langle #1 \rangle}$
+$\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$
+$\newcommand{\unit}[1]{\mathrm{\,#1}}$</p>
+
+<h1> Schrödinger equation </h1>
+
+\[i\hbar \frac{d\Psi(x,t)}{dt} = \hat{\mathcal{H}} \Psi(x,t)\]
+
+<h1>Constants and values</h1>
+<p>Flux quantum:</p>
+
+\[\Phi_0 = 2\pi \hbar/e\]
+
+<h1>The wave function and probabilities </h1>
+
+<h1>The Hamiltonian</h1>
+
+<p>If $\ket{n}$ is an eigenstate of the Hamiltonian:</p>
+
+\[\bra{n}\hat{H}\ket{n} = E_n\]
+
+<p>\(\bra{n}\ket{m} = 1\) if $m=n$</p>
+<h1>Operators</h1>
+<p>In the Heisenberg picture $A_H = U^\dagger(t) A_S U(t)$ (incl. for $\hat{H}$)</p>
+
+\[\frac{d}{dt}A_H(t) = \frac{i}{\hbar}[H_H(t),A_H(t)] + \left(\ptpt{A_S}{t}\right)_H\]
+
+<p>Observables are <em>Hermitian</em></p>
+
+<p>The energy of a particle is always $E&gt;V_{min}$ in the Time-independent Schrodinger equation.</p>
+
+<p>The eigenfunctions/values with a discrete spectra of a Hermitian operator are always real.</p>
+
+<p>The eigenfunctions/values with a discrete spectra of a Hermitian operator are always orthonormal, if they are degenerate, we can make them orthonormal.</p>
+
+<p>The eigenfunction/values of a discrete spectra of a Hermition operator with finite dimensional values is complete.</p>
+
+<p>The eigenfunction of a continous spectrum with a real eigenvalue is Dirac orthonormal ($\bra{f_x}\ket{f_y} = \delta(x-y)$)</p>
+
+<p>The normalizable eigenfunctions/eigenfunctions in Hilbert space of a continous spectrum has real eigenvalues.</p>
+
+<h1>Commutation</h1>
+
+<p>Generalized uncertainty relation (with operators $A$ and $B$) ($\Delta A  = \langle A^2 \rangle  - \langle A \rangle^2$):</p>
+
+\[\Delta A \Delta B \geq \left( \frac{\langle [A,B]\rangle}{2i}\right)^2\]
+
+<p>Ultra generalized uncertainty relation (with operators $A$ and $B$) ($\Delta A  = \langle A^2 \rangle  - \langle A \rangle^2$):</p>
+
+\[\Delta A \Delta B \geq  \frac{\langle -i[A,B]\rangle^2+\langle \{A,B\} - 2\expval{A}\expval{B}\rangle^2}{4}\]
+
+<p>If \(\left[\hat{A},\hat{B}\right]=0\) and $\ket{\psi}$ is an eigenfunction of $\hat{A}$ with eigenvalue $A_n$ then $\hat{B}\ket{\psi}$ is also an eigenfunction of $\hat{A}$ with eigenvalue $A_n$ (and vice versa)</p>
+
+\[\hat{A}(\hat{B}\ket{n}_A) = \hat{B}(\hat{A}\ket{n}_A)= \hat{B}(A_n \ket{n}_A) = A_n(\hat{B}\ket{n}_A)\]
+
+<h1>Perturbation theory</h1>
+<p>For $\hat{H} = \hat{H}_0 + \hat{H}’$ where the eigenstates/eigenenergies to $\hat{H}_0$ are $E^0_n$ and $\psi^0_n$ and a non-degenerate energy level:</p>
+
+\[E_n^1  = \bra{\psi_n^0}H'\ket{\psi_n^0}\]
+
+<p>Second order perturbation energy diff:</p>
+
+\[E_n^2 = \sum_{m\neq n} \frac{\lvert\bra{\psi^0_n}H'\ket{\psi^0_m}\rvert^2}{E_n^0 - E_m^0}\]
+
+<p>Pre-fermi’s Golden Rule ($H_0 + H’(t)$, $\ket{\psi(t)} = \sum_n a_n(t) e^{iE^0_nt/\hbar}\ket{\psi_n^0}$):</p>
+
+\[i\hbar\ptpt{a_k(t)}{t} = \sum_n a_n(t) \bra{\psi_k^0}H'\ket{\psi_n^0}e^{it(E^0_k-E^0_n)/\hbar}\]
+
+<p>Fermi’s Golden Rule (from initial eigenstate $\ket{i}$ to all other continuum eigenstates $\ket{n}$)<br />
+where the coupling $g(E_n)$ of $n$ and $i$ is continuous over $n$<br />
+where $t&lt;t_H = \frac{2\pi \hbar}{\Delta}\approx 2\pi\hbar \rho(E_i)$, with $\Delta$ the energy spacing of the ‘continuum’<br />
+and where $E_i$ far from continuum thresholds $t\gg\frac{2\pi \hbar}{|E_b-a|}$<br />
+and where $H’\ll H_0$:</p>
+
+\[\Gamma_{i\rightarrow cont} = \frac{2\pi}{\hbar} \sum_n |g_{n}|^2 \delta (E_i-E_n) \approx \frac{2\pi}{\hbar} |g(E_i)|^2 \rho_{DOS}(E_i)\]
+
+<p>$g(E_n) = g_n = \bra{n}H’\ket{i}$, $\rho(\epsilon)$ the density of states, $t_H$ called the Heisenberg time.</p>
+
+<p>Second order Fermi’s Golden rule (virtual excitations):</p>
+
+\[\Gamma_{i\rightarrow f}^{(2)} = \frac{2\pi}{\hbar}  |\sum_v \frac{H'_{fv}H'_{vi}}{E_v-E_i}|^2 \delta (E_i-E_f)\]
+
+<h1>Gauge invariance</h1>
+
+<h1>Analytical solutions</h1>
+
+<p>Landau levels (energy):</p>
+
+\[E_n = \frac{1}{2}\omega_B(n+\frac{1}{2}) \qquad \omega_B = \lvert\frac{qB}{m}\rvert\]
+
+<p>Zeeman splitting (spin 1/2, free electrons, g=2):</p>
+
+\[E = g\mu_B B \qquad \mu_B = \frac{e\hbar}{2m}\]
+
+<p>Two-electron system spin operator eigenstates of 
+\(\vec{S}^2 = \vec{S}^2_1 + \vec{S}_2^2 = S_x^2+S_y^2+S_z^2\) and \(S_z = S_{z1}+S_{z2}\)</p>
+
+<p>\(S^2 = 0, S_z =0\qquad \ket{\psi} = \frac{1}{\sqrt{2}}(\ket{\uparrow\downarrow}-\ket{\downarrow\uparrow})\qquad (singlet)\)
+\(S^2 = 1, S_z =1\qquad \ket{\psi} = \ket{\uparrow\uparrow}\qquad (triplet)\)
+\(S^2 = 1, S_z =0\qquad \ket{\psi} = \frac{1}{\sqrt{2}}(\ket{\uparrow\downarrow}+\ket{\downarrow\uparrow})\qquad (triplet)\)
+\(S^2 = 1, S_z =-1\qquad \ket{\psi} = \ket{\downarrow\downarrow}\qquad (triplet)\)</p>
+
+<p>Eigenvalues of \(\vec{S}_1\cdot \vec{S}_2\):</p>
+
+\[\langle \vec{S}_1\cdot \vec{S}_2 \rangle_{triplet} = \frac{1}{4}\hbar^2 \qquad  \langle \vec{S}_1\cdot \vec{S}_2 \rangle_{singlet} = -\frac{3}{4}\hbar^2\]
+
+<p>Hamiltonian that gives the eigenstates and eigenvalues of the 2-spin operator $\mathbf{S}_1\cdot \mathbf{S}_2$ is:</p>
+
+\[\hat{H} = \frac{1}{4}(E_s+3E_t) - (E_s - E_t) \mathbf{S}_1\cdot \mathbf{S}_2 = C - J \mathbf{S}_1\cdot \mathbf{S}_2\]
+
+<p>with $E_s = -3/4\hbar^2 $ and $E_t = 1/4 \hbar^2$ and $J = (E_s - E_t)$</p>
+
+<h1> Other models (unsolved) </h1>
+<p>Hubbard model: \(H = - J\sum S_i S_j\) and <br />
+if $J&gt;0: S_i\parallel S_j$<br />
+If $J&lt;0$: $S_i \text{ not }\parallel S_j$</p>
+
+<h1>Calculation tools of quantum mechanics </h1>
+<p>Adiabatic theorem:<br />
+<em>If we place a system in a non-degenerate eigenstate $\ket{n}$ and vary the parameters of the Hamiltonian sufficiently slowly, the system will stay in the eigenstate $\ket{n}$ if no level-crossings are encountered.</em></p>
+
+<p>Berry connection $\mathcal{A}_j(\lambda)$(under adiabatic change of parameters $\lambda^j$ of eigenstate $\ket{n}(\lambda(t))$ with constant energy $E_n(\lambda(t)) = 0$)<a href="https://arxiv.org/pdf/1606.06687.pdf">ref</a>:</p>
+
+\[\mathcal{A}_j(\lambda) = -i\bra{n}\frac{\partial \ket{n}}{\partial \lambda^j}\]
+
+<p>Berry phase: the phase acquired (next to the energy dynamical phase) by changing parameters $\lambda^j$ adiabatically:</p>
+
+\[e^{i\gamma} = \exp(-i\oint_C\mathcal{A}_j (\lambda)d\lambda^j)\]
+
+<p>‘Gauge’ invariance of Berry connection (with starting state $\ket{n’} = e^{i\omega(\lambda)}\ket{n}$:</p>
+
+\[\mathcal{A}'_j(\lambda) = \mathcal{A}_j(\lambda) + \frac{\partial \omega(\lambda)}{\partial \lambda^j}\]
+
+<p>Berry curvature (all physical phase information):</p>
+
+\[\mathcal{F}_{ij}= \ptpt{\mathcal{A}_j}{\lambda^j}\]
+
+<p>Berry curvature quantization theorem:<br />
+<em>For any closed surface $S$, we find that $\oint_S \mathcal{F}_{ij} dS^{ij} =2 \pi k$ for $k\in\mathcal{Z}$</em></p>
+
+<h1> Postulates of quantum mechanics </h1>
+
+<p><em>There exist identical particles are indistinguishable</em> -&gt; Permutation of every pair of identical particles in a system follows the same Hamiltonian</p>
+
+<p><em>For a system of $N$ identical particles, the symmetry posulate requires it to be fully symmetric or fully anti-symmetric</em> (there could be some subspaces in which you could work otherwise, giving \hat{P}_{123}\psi=e^{i2\pi/3}\psi).</p>
+
+<h1>Other useful theorems of quantum mechanics </h1>
+
+<p>For identical particles: the Hamiltonian is invariant under permutation (operator $\hat{P}_{ij}$, where $\lambda_P = \pm 1$ and $\hat{P}^2 = 1$ and $\hat{P} = \hat{P}^\dagger$):
+\(\hat{H}(r_1,r_2,...,r_i,...,r_j,...,r_N)= \hat{H}(r_1,r_2,...,r_j,...,r_i,...,r_N) \Leftrightarrow \hat{P}_{ij}\hat{H} \hat{P}_{ij} = \hat{H} \Leftrightarrow [\hat{P},\hat{H}]=0\)</p>
+
+<p>Time reversal symmetry (defined as \(\hat{\mathcal{T}}\hat{\mathcal{H}}= \hat{\mathcal{H}}\hat{\mathcal{T}}\)) using the Schrodinger equation:</p>
+
+\[\hat{\mathcal{T}} = \hat{\mathcal{K}} (when no spin)\]
+
+\[\hat{\mathcal{T}} = i\sigma^y \hat{\mathcal{K}} (with spin)\]
+
+<p>where $\hat{\mathcal{K}}$ is the complex conjugation operator. Other time-reversal results:</p>
+
+\[\hat{\mathcal{T}}\vec{\mu} = -\vec{\mu}\]
+
+\[E_{EM}(x,t) \propto e^{-ikz}\qquad\hat{\mathcal{T}}E_{EM}(x,t) = E_{EM}(x,-t) \propto e^{+ikz}\]
+
+<p>Fermion permutation operator:
+\(\Psi(r_1,r_2,...,r_i,...,r_j,...,r_N)= -1 \Psi(r_1,r_2,...,r_j,...,r_i,...,r_N)\)</p>
+
+<p>Boson permutation operator:
+\(\Psi(r_1,r_2,...,r_i,...,r_j,...,r_N)= +1 \Psi(r_1,r_2,...,r_j,...,r_i,...,r_N)\)</p>
+
+<p>Anyon permutation operator ($\theta_{ij}=\pi (1-\frac{1}{v}), v\in\mathbb{Z}$):
+\(\Psi(r_1,r_2,...,r_i,...,r_j,...,r_N)= e^{i\theta_{ij}} \Psi(r_1,r_2,...,r_j,...,r_i,...,r_N)\)</p>
+
+<p>For symmetric potentials, the wavefunctions are alternatively even and odd (ground state even, 1st state odd, etc.)\</p>
+
+<p>Every more excited state has an extra zero-crossing in the wavefunction.\</p>
+
+<p>Most stationary state solutions (wavefunctions) of the Hamiltonian are orthogonal.</p>
+
+<p>Most stationary states are complete.</p>
+
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Elmoreapolis</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Elmoreapolis</li><li><a class="u-email" href="mailto:elmorevaal@gmail.com">elmorevaal@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ElmoreV"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ElmoreV</span></a></li><li><a href="https://www.twitter.com/MoreVaal"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">MoreVaal</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Hi! Please consult your doctor about the recommended daily dose of topics for you.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

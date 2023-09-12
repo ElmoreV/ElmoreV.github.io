@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Superconductivity - in equations | Elmoreapolis</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Superconductivity - in equations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<meta property="og:description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<link rel="canonical" href="http://localhost:4000/simulation/magnetism/superconductivity/2020/02/23/Superconductivity-in-equations.html" />
+<meta property="og:url" content="http://localhost:4000/simulation/magnetism/superconductivity/2020/02/23/Superconductivity-in-equations.html" />
+<meta property="og:site_name" content="Elmoreapolis" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-23T11:31:06+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Superconductivity - in equations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-02-23T11:31:06+01:00","datePublished":"2020-02-23T11:31:06+01:00","description":"$\\newcommand{\\ket}[1]{\\rvert #1 \\rangle}$ $\\newcommand{\\bra}[1]{\\langle #1 \\lvert}$ $\\newcommand{\\ptpt}[2]{\\frac{\\partial #1}{\\partial #2}}$ $\\newcommand{\\unit}[1]{\\mathrm{\\,#1}}$","headline":"Superconductivity - in equations","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/simulation/magnetism/superconductivity/2020/02/23/Superconductivity-in-equations.html"},"url":"http://localhost:4000/simulation/magnetism/superconductivity/2020/02/23/Superconductivity-in-equations.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Elmoreapolis" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Elmoreapolis</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+     TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      tagSide: "right"
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+<h1>Superconductivity - in equations</h1>
+<p>23 Feb 2020 - </p>
+
+<p>$\newcommand{\ket}[1]{\rvert #1 \rangle}$
+$\newcommand{\bra}[1]{\langle #1 \lvert}$
+$\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$
+$\newcommand{\unit}[1]{\mathrm{\,#1}}$</p>
+
+<h1> Superconductivity </h1>
+
+<p>Properties (bulk)<br />
+Perfect conductivity of lelectricity below $T_c, H_c, J_c$ (temperature,field,current density)<br />
+Fully expels magnetic field ($B=0$ inside).</p>
+
+<p>Methods to verify properties<br />
+Infrared absorption = Energy gap $\Delta$ measurement (since 1950s)<br />
+Ultrasound absorption (phonon absorption) = Gives $T_c$
+Tunneling (NS interface) = $N(E)$ Density of states<br />
+Angular resolved Photon emission spectroscopy = $k$-dependence/orientation dependence of $\Delta$<br />
+NMR = Coherence length $\xi$- measurement<br />
+XRD = Crystal structure measurement (does not change on transition)<br />
+STM = Abrokosov lattice (hexagonal) measurement in type II SCs.
+Electron tunneling = The gap measurement</p>
+
+<h1> Type I and Type II</h1>
+<p>Type I:<br />
+Pure metals<br />
+Perfect diamagnets ($\chi_{SC} = -1$)<br />
+$\lambda &lt; \frac{\xi}{\sqrt{2}}$\</p>
+
+<p>Type II:<br />
+Alloys/intermetallic<br />
+Two critical fields (SC state, vortex state,normal state)<br />
+$\lambda &gt; \frac{\xi}{\sqrt{2}}$</p>
+
+<h1> Superconductor + Maxwell + 2-fluid model = London equations</h1>
+<p>Only normalconducting electrons:</p>
+
+\[\sigma \rightarrow \infty\]
+
+\[j \rightarrow finite\]
+
+\[E \rightarrow 0\]
+
+\[B \rightarrow constant\]
+
+<p>Cannot be explained (but is consistent with) classical electrodynamics.</p>
+
+<p>Maxwell:</p>
+
+\[\nabla\times \mathbf{B} = \mu_0 \left(\mathbf{J}_s + \ptpt{\mathbf{D}}{t}\right)\]
+
+\[\nabla\times \mathbf{E} = -\ptpt{\mathbf{B}}{t}\]
+
+\[\nabla\cdot \mathbf{B} = 0\]
+
+<p>And assumptions (two fluid model: separate superconducting electrons and very small displacement current/slowly changing mag field and low $vB$):</p>
+
+\[\ptpt{\mathbf{D}}{t}\rightarrow 0 \Leftrightarrow \ptpt{^2 \mathbf{B}}{t^2}\rightarrow 0\]
+
+\[\mathbf{J}_s = n_s e^* \mathbf{v}_s\]
+
+\[m^*\dot{\mathbf{v}}_s = e^* E\]
+
+<p>where $e^* $, $m^* $ are the effective charge, mass. 
+We get for the $E$, $B$-fields (and the London equations for $J_s$)</p>
+
+\[\mathbf{B} = \frac{m}{\mu_0 n_s e^2}\nabla^2 \mathbf{B}; \qquad \mathbf{E} = \frac{m}{n_se^2} \mathbf{\dot{J}_s};\qquad \nabla\times\mathbf{J_s} = -\mu_0\lambda_L^2\mathbf{B}\]
+
+<p>in a free-charge less material ($\rho_f=0$):</p>
+
+\[\nabla^2\mathbf{E} = \lamba_L^2 \mathbf{E}\]
+
+<p>For a 1D wall, we get (the mag field $B=0$ deep inside the bulk superconductor):</p>
+
+\[B(x) = B_{ext} e^{-x/\lambda_L}\]
+
+<p>where $\lambda_L = \sqrt{\frac{m}{\mu_0 n_s e^2}}$.</p>
+
+<p>assume that at $T=0$, $n_s = n_{tot}$:
+\(\lambda_L(0) = \sqrt{\frac{m}{\mu_0 n e^2}};\qquad\)</p>
+
+<h2> Two-fluid model </h2>
+<p>Assume Drude model for 2 fluids (normal electrons $n_n$, superconducting electrons $n_s$):</p>
+
+\[m \frac{d\mathbf{v}_i}{dt} = eE - m\frac{\mathbf{v}_i}{\tau_i}\]
+
+<p>with \(\mathbf{J}_i = n_i e \mathbf{v}_i\) and $\tau_s\rightarrow \infty$ and fourier transforming keeping directions intacts and \(\mathbf{J}_i(\omega) = \sigma_i \mathbf{E}(\omega)\) where $\sigma_i = \sigma_{1i} - i \sigma_{2i}$</p>
+
+\[\sigma_{1s} = \frac{\pi}{2} \frac{n_s e^2}{m}\delta(\omega);\qquad \sigma_{2s} = \frac{n_s e^2}{m\omega}\]
+
+<p>Assuming $\omega   \ll \frac{1}{\tau_n}$ (normally $\tau_n \approx 10^{-19}$</p>
+
+\[\sigma_{1n} = \frac{\tau_n e^2 n_n}{m}; \sigma_{2n} = 0\]
+
+<p>Temperature dependencies are (in Gorter-Casimir model) just below $T_C$ $n_n = t^4$ and $n_s = (1-t^4)$ where $t=\frac{T}{T_c}$</p>
+
+<p>Power dissipated per unit volume is \(\rho \lvert J\rvert^2= Re(1/\sigma^2)\lvert J\rvert^2\) so that total power loss is \(P_{loss} \approx \sigma_N\frac{\mu_0^2 \omega^2}{\lambda_L^4} \lvert J\rvert^2 V\) where $V$ is the volume.</p>
+
+<h1> Thermodynamical work of magnetic field + state energy difference </h1>
+
+<p>Thermodynamics with Gibbs free energy per volume $g$ and $M = \chi H_{ext}$ and $B=\mu_0(H_{ext} + M)$.
+Work done by placing material in field</p>
+
+\[W = -\mu_0 \int_0^{H_{ext}} MdH = -\mu_0 \chi \frac{H_{ext}^2}{2}\]
+
+<p>Using $g_s(T,H_{ext}) = g_s(T,0) + W_{H_{ext}}$ and the $\chi\ll 1$ for the normal state and $H_c := H_{ext}$ when $g_s(T,H_{ext})=g_n(T,H_{ext})$</p>
+
+\[g_n(T,0)-g_s(T,0) = \frac{\mu_0(1+\chi_n) H_c^2}{2}\]
+
+<p>which is <emph>really really</emph> small.</p>
+
+<p>For a thin-film ($d\ll \lambda$) you can find (because Magnetization is way lower and $B$ does not tend to $0$ inside):</p>
+
+\[H_{c,\parallel} = \sqrt{24}H_c\lambda/d\]
+
+<h1> Critical field at temperature</h1>
+
+\[H_c(T) = H_c(T=0)\left[1-\left(\frac{T}{T_c}\right)^2\right]\]
+
+<h2> Thermodynamical specific heat (+measurement of discontinuity)</h2>
+
+<p>Volume constant during change of internal energy/adding heat:</p>
+
+\[c_V = \frac{dQ}{MdT} = \frac{dU}{dT}\]
+
+<h1> Non-local electrodynamics </h1>
+
+\[\sigma_p \sim \frac{\sigma_E}{v_F} \sim \frac{k_B T_c}{v_F}\]
+
+\[\sigma_x \sim \xi = \mathcal{O}(1)\cdot \frac{\hbar v_F}{k_B T_c}\]
+
+\[\mathbf{J}_s(\mathbf{r}) = C \int \frac{\mathbf{r}(\mathbf{r}\cdot \mathbf{A}(\mathbf{r}'))}{r^4} \mathrm{e}^{r/\xi} d^3 \mathbf{r}'\]
+
+<p>instead of</p>
+
+\[\mathbf{J}_s(\mathbf{r}) = \sigma E(\mathbf{r})\]
+
+<h1> Evidence for phonon interaction </h1>
+
+\[\Delta T_c/T_c = -\frac{1}{2} \frac{\Delta M}{M}\]
+
+<p>$M$ is the mass of an ion, $\Delta M$ is the difference in ion mass for a different isotope.</p>
+
+<h1> Cooper instability </h1>
+<p>Screened Coloumb potential (always positive = always repulsive):</p>
+
+\[V_C=\frac{V_{\mathbf{q}}}{\mathcal{E}(\mathbf{q},\omega)}\]
+
+<p>Electron phonon interaction (can be negative when $\omega^2&lt;\omega_D^2$:</p>
+
+\[V_{e-ph} = \frac{2\omega_D M_q^2}{\mathcal{E}(\mathbf{q},\omega)(\omega^2- \omega_D^2(\mathbf{q}))}\]
+
+<p>Scattering of the minimum 2-electron wavefunction/particles (assuming that symmetric wavefunction = lowest energy and up-down spin is only one that can bind)<br />
+and the interaction is spin-independent and $\ket{i}, \ket{f}$ are plane wave states:</p>
+
+\[\left(H_{e-e}^{direct}\right)_{if} = \bra{i} H_{e-e}^{direct} \ket{f} = \int e^{i\mathbf{k}\cdot \mathbf{r}} U_{Coloumb}(\mathbf{r})e^{-i\mathbf{k}'\cdot \mathbf{r}}d^3r\]
+
+<p>Scattering of 2 electrons through indirect process:</p>
+
+\[\frac{\bra{i}H\ket{int}\bra{int}H\ket{f}}{(E_i-E_{int})^2}\]
+
+<h1>The singlet wavefunction</h1>
+<p>\(\ket{\Psi_0} = \sum_{k&gt;k_F} g_k c^\dagger_{k\uparrow}c^\dagger_{-k\downarrow} \ket{0}\)
+where $\ket{0}$ is the filled Fermi Sea, $\ket{\Psi_0}$ is the superconducting many body ground state, $g_k$ a (filling) constant and $c^\dagger_{k\uparrow}c^\dagger_{-k\downarrow}$ the creation operators of a $(k\uparrow,-k\downarrow)$ pair.</p>
+
+<p>For $N$ electrons, you can make $N/2$ different pairs.</p>
+
+\[\ket{\Psi_G} = \prod_{k_1,k_2,\ldots,k_N} (u_{k_i}+v_{k_i}c^\dagger_{k_i\uparrow})c^\dagger_{k_i\downarrow}\ket{0}\]
+
+<h2> Determining $T_c$ </h2>
+
+<p>From BCS somewhere:</p>
+
+\[E_k = \sqrt{\xi_k^2 + \Delta^2(T)}; \qquad \Delta(T\rightarrow T_c)=0\]
+
+<p>where does the below equation comes from?</p>
+
+\[\frac{1}{V} = \frac{1}{2}\sum_k \frac{\tanh(\beta E_k/2)}{E_k} = N(E_F)\int_0^{\beta_c \hbar \omega_D/2} \frac{\tanh(x)}{x}dx\]
+
+<p>from this</p>
+
+\[k_B T_c = 1.13 \hbar \omega_D e^{-1/(N(E_F)V)}\]
+
+<p>Also from something different $\Delta(T=0) = 2\hbar \omega_D e^{-1/(N(E_F)V)}$ for $NV\ll 1$:</p>
+
+\[\Delta(0) = 1.764k_B T_c\]
+
+<p>Close to $T=0$</p>
+
+\[\Delta(T) = 1.74\Delta_0\sqrt{1-\frac{T}{T_c}}\]
+
+<h2> Determining specific heat $c_v$ </h2>
+
+<p>Assume $E_k = \sqrt{\xi_k^2+\Delta^2(T)}$ and a F-D distribution for the qps $f_k :=f(E_k) = \frac{1}{1+\exp(\beta E_k)}$ and entropy being $S=-k_b \sum_i p_i \ln(p_i) $ and specific heat $C_v = TdS/dT = -\beta dS/d\beta$. Electronic contribution to entropy in superconducting state (every qp in up/down spin occupied or not):</p>
+
+\[S_{e,sc} =-2k_b \sum_k (1-f_k)\ln(1-f_k) + f_k \ln(f_k)\]
+
+<p>Note that $\frac{dE_k}{d\beta}\neq 0$ and that chain rules can be applied a lot and $\xi_k$ indep of $\beta$:</p>
+
+\[c_v = -2\beta k_b \sum_k E_k \ptpt{f_k}{E_k} (E_k + \frac{\beta}{2E_k}\ptpt{\Delta^2(T)}{\beta})\]
+
+<p>Now we need to use the sum_k to int over energies and find for T«T_c, T just below T_c, T above T_c (TBD):</p>
+
+<p>\(C(T\llT_c) = \gamma T = \frac{2\pi^2}{3}N(\xi_k)k_b^2T\)$</p>
+
+\[C(T\uparrow T_c) = N(\xi_F)k_B \beta^2 \frac{d\Delta^2}{d\beta}\int_{-\infty}^\infty \ptpt{f}{\chi}d\chi\]
+
+\[\frac{\Delta c}{C_{e,norm}} = \frac{9.4}{2\pi/3}\]
+
+<p>And we find the discontinuous jump at $T=T_c$:</p>
+
+<h1> The quantum model (aka Landau-Ginzburg theory) </h1>
+
+<p>This theory is only completely valid at $T\approx T_c$</p>
+
+<p>The ground state wave function ($n_s$ constant over space):</p>
+
+\[\psi_s(x,t) = |\psi|e^{i\phi}; \qquad |\psi(x,t)|^2 = n_s(x,t) \qquad \nabla \psi_s = i|\psi|e^{i\phi}\nabla \phi\]
+
+<p>Electric systems (canonical momentum operator):</p>
+
+\[-i\hbar \nabla \psi=\mathbf{\hat{p}} = m^*\mathbf{\hat{v}}_s  + e^* \mathbf{A}\]
+
+<p>We get the London equations again (with an extra factor $\nabla \phi$).</p>
+
+\[\mathbf{J_s} = - \frac{\mathbf{A}}{\mu_0 \lambda_L^2}+\frac{\hbar}{e^{*}}\nabla \phi\]
+
+<p>Asserting single-valuedness of the wavefunction gives flux quantization over a superconducting ring in flux quanta $\Phi_0 = \frac{h}{2e}$</p>
+
+\[\Phi = \frac{\hbar}{2e}\oint_\mathcal{C} \nabla \theta \cdot d\ell =\frac{\hbar}{2e}\cdot  2\pi n \Leftrightarrow \frac{\Phi}{\Phi_0} = n\]
+
+<h1> Unconventional superconductors </h1>
+
+<p>Conventional have $L=0,S=0$ -&gt; singlet.\</p>
+
+<p>p-wave $L=1$ -&gt; triplet\</p>
+
+<p>d-wave $L=2$ -&gt; Singlet \</p>
+
+<p>In general for $L&gt;0$:</p>
+
+\[\Delta_{\vec{k}}  = - \sum_{\vec{k}'} V_{\vec{k}\vec{k}'}\frac{1-2f(E_{\vec{k}'})}{2E_{\vec{k}'}}\]
+
+<p>Generally:</p>
+
+\[\Delta_{\vec{k}} = \Delta_0 \cdot \Phi(\vec{k})\]
+
+<p>Also when $Im(\Phi) \neq 0 \Rightarrow $ <i>Time Symmetry is broken</i></p>
+
+<p>Breaking time symmetry $\Leftrightarrow$ a Kerr angle effect is measurable (but it is required to account for all Onsager reciprocity effects).</p>
+
+<h1> Empiric statements </h1>
+
+<p>1) An average of 5/7 free electrons works best for higher Tc (alloys of 6+8 electrons work good).
+2) A15 (Beta-Tungsten) structure is necessary for high Tc (metal/conventional) superconductivity
+3) There are organic superconductors ($KC_8$ with $T_c = 1\unit{K}$ and $K_3C_{60}$ with $T_c = 18\unit{K}$)</p>
+
+<h2> Handy plots </h2>
+<p>Uemara plot<br />
+Knight shift plot\</p>
+
+<h1> Footnotes </h1>
+<p>Coming back to our example: scaling the values to simulation values is the same as changing the dimensions where $x$ is in meters, $\tilde{x}$ is in unit ‘simulation meters’ $m^{sim}$ and $c_x$ has the unit $\frac{m^{sim}}{m}$ ‘meters per simulation meter’.</p>
+
+<p>000014-04EKFM-8FFN3M-X2B7D7-0NGF9D-KATY05-MRGN3X-8Q5HK0-QQ1V0X-YPGJHR</p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Elmoreapolis</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Elmoreapolis</li><li><a class="u-email" href="mailto:elmorevaal@gmail.com">elmorevaal@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ElmoreV"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ElmoreV</span></a></li><li><a href="https://www.twitter.com/MoreVaal"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">MoreVaal</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Hi! Please consult your doctor about the recommended daily dose of topics for you.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Changing simulation dimensions - what am I actually simulating? | Elmoreapolis</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Changing simulation dimensions - what am I actually simulating?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<meta property="og:description" content="$\newcommand{\ket}[1]{\rvert #1 \rangle}$ $\newcommand{\bra}[1]{\langle #1 \lvert}$ $\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$ $\newcommand{\unit}[1]{\mathrm{\,#1}}$" />
+<link rel="canonical" href="http://localhost:4000/simulation/hall_effect/magnetism/2020/02/23/Changing-dimensions-a-step-by-step-guide.html" />
+<meta property="og:url" content="http://localhost:4000/simulation/hall_effect/magnetism/2020/02/23/Changing-dimensions-a-step-by-step-guide.html" />
+<meta property="og:site_name" content="Elmoreapolis" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-23T11:31:06+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Changing simulation dimensions - what am I actually simulating?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-02-23T11:31:06+01:00","datePublished":"2020-02-23T11:31:06+01:00","description":"$\\newcommand{\\ket}[1]{\\rvert #1 \\rangle}$ $\\newcommand{\\bra}[1]{\\langle #1 \\lvert}$ $\\newcommand{\\ptpt}[2]{\\frac{\\partial #1}{\\partial #2}}$ $\\newcommand{\\unit}[1]{\\mathrm{\\,#1}}$","headline":"Changing simulation dimensions - what am I actually simulating?","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/simulation/hall_effect/magnetism/2020/02/23/Changing-dimensions-a-step-by-step-guide.html"},"url":"http://localhost:4000/simulation/hall_effect/magnetism/2020/02/23/Changing-dimensions-a-step-by-step-guide.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Elmoreapolis" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Elmoreapolis</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+     TeX: {
+      equationNumbers: { autoNumber: "AMS" },
+      tagSide: "right"
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+<h1>Changing simulation dimensions - what am I actually simulating?</h1>
+<p>23 Feb 2020 - </p>
+
+<p>$\newcommand{\ket}[1]{\rvert #1 \rangle}$
+$\newcommand{\bra}[1]{\langle #1 \lvert}$
+$\newcommand{\ptpt}[2]{\frac{\partial #1}{\partial #2}}$
+$\newcommand{\unit}[1]{\mathrm{\,#1}}$</p>
+
+<h1> Why would you want to scale the simulation? </h1>
+
+<p>Hey, welcome to another side adventure where we’ll be looking at a simulation trick: scaling variables. The most important reason is: it makes simulating easier, since you’ll be working with numbers that are tractable for the computer and for you (numbers like one and a 100). In simulations, especially particle simulations, values of $10^{-20}$ to $10^{-30}$ often appear, while the machine precision often only provides that calculations of $10^{-16}$ of the total quantities are working correctly (when adding and subtracting). It also helps for getting interesting physics: you have two effects (let’s say the force of an electric field and the force by other electrons), you can easily change the factor of the electron interaction force so that one of the two dominates. And lastly: it is easier to verify your calculations by hand, since you can set up a system for which you know the dynamics. Here changing the factors does not change the scaled simulated system and the analytical solution (given that you use the scaled variables in the analytical solution). However, say you have a real-life problem, you would still need to actually find the scaling parameters. In this article we will be setting up an interesting system to solve this problem for and then see an elegant way to do this.</p>
+
+<h1> An interesting system to scale - charged particle simulation </h1>
+
+<p>Take our charged particle simulator we build to explain the Hall effect. It uses the following equations of motion for each particle $i$:</p>
+
+\[m_i\mathbf{a}_i = \mathbf{F}_i = \sum_{j\neq i} k_e \frac{q_j q_i}{r_{ij}^2}\mathbf{r}_{ij} + q_i (\mathbf{E}(\mathbf{x}_i) + \mathbf{v}_i\times \mathbf{B}(\mathbf{x}_i))\]
+
+\[\mathbf{a}_i = \frac{d\mathbf{v}_i}{dt}\]
+
+\[\mathbf{v}_i = \frac{d\mathbf{x}_i}{dt}\]
+
+\[\mathbf{r}_{ij} = \mathbf{x}_i - \mathbf{x}_j\]
+
+<p>However, in our simulations, we did not use the actual values $q_i \approx 1.6\cdot 10^{-19}\unit{C}$,$k_e = \approx 9\cdot 10^9 \unit{N\cdot m^2\cdot C^{-2}}$ and $m_i\approx 9.1\cdot 10^{-31}$! We used $k_e = 10^5$ and $q=m=1$ for all particles.</p>
+
+<p>Instead of changing these parameters, we could also be scaling all other physical quantities ($x,v,a,t,F,E,B$) in our simulation so that the numerical values that the forces take are tractable, such as taking $E=\frac{1}{q} \tilde{E}$, which would cause the term $qE$ to be $\sim 1$. What we want is a systemic way to find out the right scaling laws. Let’s put this into symbols. The values in our simulation are denoted by $\tilde{\cdot}$ while the real values are given as normal. The parameters we changed can be described by:</p>
+
+\[\begin{align*}
+c_q q&amp;=\tilde{q}\\
+c_m m&amp;=\tilde{m}\\
+c_k k_e &amp;= \tilde{k}_e
+\end{align*}\]
+
+<p>And we want to find the scaling laws of:</p>
+
+\[\begin{align*}
+c_x x &amp;= \tilde{x}\\
+c_t t &amp;= \tilde{t}\\
+c_B B &amp;= \tilde{B}\\
+c_E E &amp;= \tilde{E}
+\end{align*}\]
+
+<p>As an example, let us look at the equation $F=ma$, which in our simulation will be simulated as $\tilde{F} = \tilde{m}\tilde{a}$. With the above knowledge, the simulation equation gives rise to a relation between the scaling parameters as follows</p>
+
+\[\tilde{F} = \tilde{m}\tilde{a}\]
+
+\[\begin{equation}c_FF = c_m c_a ma\end{equation}\label{eq:examp1}\]
+
+\[\begin{equation}c_F = c_m c_a\end{equation}\label{eq:examp2}\]
+
+<p>, which means that with a sufficient amount of consistent relations, we should be able to recover all scaling parameters.</p>
+
+<h1> Dimensional analysis </h1>
+
+<p>In the realm of physics, a very easy way to check if your calculation is correct is by looking at the units of both sides of the equation. The units of each term on the rhs (right hand side) (where term means every group of variables that is separated by a ‘$+$’) must equal the units of each term on the lhs (left hand side). It is a bit of a stretch, but since our equations must hold whether or not every term is present, each term on the rhs must equal that on the lhs following Equations $\eqref{eq:examp1}$ and $\eqref{eq:examp2}$</p>
+
+<p>Now look at another example from our simulation - the coloumb force:</p>
+
+\[\tilde{m}\tilde{\mathbf{a}}_i = -\tilde{k}_e \frac{\tilde{q}_i\tilde{q}_j}{\tilde{r}_{ij}^2}\tilde{\mathbf{r}}_{ij}\]
+
+\[c_m c_a m_ia_i = -c_{k}k_e \frac{c_q^2q_iq_j}{c_x^3r_{ij}^3}c_x\mathbf{r}_{ij}\]
+
+<p>but since $m_ia_i = -k_e \frac{q_iq_j}{r_{ij}^3}\mathbf{r}_{ij}$ in absence of other forces</p>
+
+\[c_m c_a = c_{k} \frac{c_q^2}{c_x^2}\]
+
+<p>but we can go even further, since $a = \frac{dv}{dt} = \frac{d^x}{dt^2}$. In our language, differentiating in time is the same as dividing by $c_t$ so that</p>
+
+\[\tilde{a} =\frac{d\tilde{v}}{d\tilde{t}} = \frac{d\frac{d\tilde{x}}{d\tilde{t}}}{d\tilde{t}}  = \frac{d \frac{dc_x x}{dc_tt}}{dc_t t} = \frac{c_x}{c_t^2} \frac{d^2x}{dt^2} = \frac{c_x}{c_t^2}a\]
+
+<p>and this essentially means that $c_a = \frac{c_x}{c_t^2}$ and we fill this in</p>
+
+\[c_m \frac{c_x}{c_t^2} = c_k \frac{c_q^2}{c_x^2}\]
+
+<p>with which we have found one of the relations we’re going to use.</p>
+
+<h1> Finding the actual relations </h1>
+
+<p>We can continue doing this for all terms in the relations:</p>
+
+\[\begin{equation}\label{eq:all_terms}c_m\frac{c_x}{c_t^2} = c_k \frac{c_q^2}{c_x^2} = c_q c_E = c_q \frac{c_x}{c_t} c_B\end{equation}\]
+
+<p>Let’s take four equations written out (with the knowns on the rhs and the unknowns on the lhs):</p>
+
+\[\begin{align*}
+\frac{c_x^3}{c_t^2} &amp;= \frac{c_k c_q^2}{c_m} \\
+\frac{c_x}{c_t^2 c_E} &amp;= \frac{c_q}{c_m} \\
+\frac{1}{c_t c_B} &amp;= \frac{c_q}{c_m}\\ 
+c_Ec_x^2 &amp;= c_k c_q\\
+\frac{c_x^3}{c_t}c_B &amp;= c_k c_q\\
+\frac{c_E c_t}{c_B c_x} &amp;= 1
+\end{align*}\]
+
+<p>These are all formulas consisting for multiplication and division. This often happens with physical formulas and makes our lives a bit easier, since we can make linear equations of these by defining them in logarithmic terms as $c_{\chi}’ = \log(c_{\chi})$. This reduces to</p>
+
+\[\begin{align}
+\begin{split}
+3c'_x - 2c'_t &amp;= c'_k+2c'_q - c'_m \\
+c'_x - 2c'_t - c'_E &amp;= c'_q - c'_m \\
+-c'_t - c'_B  &amp;= c'_q - c'_m\\ 
+c'_E+2c'_x &amp;= c'_k + c'_q\\
+3c'_x - c'_t + c'_B &amp;= c'_k + c'_q\\
+c'_E + c'_t - c'_B - c'_x &amp;= 0
+\end{split}\label{eq:lin_eqs}
+\end{align}\]
+
+<p>Let’s look at the rhs first. In our simulation, we use $c_k=\frac{10^5}{9\cdot 10^9},c_q=\frac{1}{1.6\cdot 10^{-19}},c_m=\frac{1}{9.1\cdot 10^{-31}}$. This means we can calculte all rhs. We can actually do this in vector form and do this using a matrix multiplication. This will make it easier to redo the calculation if we decide to change these parameters.</p>
+
+\[b = Bc'_{known} =  \left[\begin{matrix} c'_k + 2c'_q - c'_m\\
+c'_q - c'_m\\
+c'_q - c'_m\\
+c'_k + c'_q\\
+c'_k + c'_q\\
+0
+\end{matrix}\right] = \left[\begin{matrix} 1&amp;2&amp;-1\\
+0&amp;1&amp;-1\\
+0&amp;1&amp;-1\\
+1&amp; 1 &amp; 0\\
+1&amp; 1 &amp; 0\\
+0&amp;0&amp;0
+\end{matrix}\right] \left[\begin{matrix}c'_k\\ c'_q\\ c'_m\end{matrix}\right]\]
+
+<p>We do the same vectorization of the lhs</p>
+
+\[A_{unk}c'_{unknown} = \left[\begin{matrix}
+3&amp;-2&amp;0&amp;0\\
+1&amp; -2 &amp; -1 &amp;0\\
+0&amp;-1&amp;0 &amp; -1\\
+2&amp; 0 &amp; 1 &amp; 0\\
+3&amp; -1 &amp; 0&amp;1\\
+-1&amp;1&amp;1&amp;-1
+\end{matrix}\right]\left[\begin{matrix}c'_x\\
+c'_t\\
+c'_E\\
+c'_B
+\end{matrix}\right] = b\]
+
+<p>and we can really simply put Equations $\eqref{eq:lin_eqs}$ in the following matrix problem</p>
+
+\[A_{unk}c'_{unknown} = Bc'_{known}\]
+
+<p>we can set up the parameters and calculate it and … it doesn’t work!</p>
+
+<p>Apparently we have 4 unknowns ((c_x,c_t,c_E,c_B)) and only 3 linearly independent equations (as seen in Equations $\eqref{eq:all_terms}$)! This is however not bad news, since this means that we get another scaling parameter in our simulation to set for free! I have chosen that the magnetic field scales as in real life $c_B =1$. You can recreate the new matrices by moving all terms using $c_B$ from the lhs to the rhs. However, to prevent this from happening again, we force all the equations to be in one big matrix $A$ which is built up like:</p>
+
+\[\left[A\vert (-B)\right] = \left[\left.\begin{matrix}
+3&amp;-2&amp;0&amp;0\\
+1&amp; -2 &amp; -1 &amp;0\\
+0&amp;-1&amp;0 &amp; -1\\
+2&amp; 0 &amp; 1 &amp; 0\\
+3&amp; -1 &amp; 0&amp;1\\
+-1&amp;1&amp;1&amp;-1
+\end{matrix}\right\rvert \begin{matrix} -1&amp;-2&amp;1\\
+0&amp;-1&amp;1\\
+0&amp;-1&amp;1\\
+-1&amp; -1 &amp; 0\\
+-1&amp; -1 &amp; 0\\
+0&amp;0&amp;0
+\end{matrix}\right]\]
+
+<p>where every scaling variable now is one big vector $\mathbf{c’}=[c_x’,c_t’,c_E’,c_B’, c_k’,c_q’,c_m’]$. We just now pick the columns in $A$ corresponding to our known values and define $B = -A_{known}$ and leave the other columns to form $A_{unknown}$. We now have 3 unknowns, so we pick 3 linear independent equations and solve the problem (however, we can use all the rows and let the algorithm decide which ones to use). Below the code to do this in Python with NumPy.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c1">#A_unknown*c_unkown = A_known*c_known
+</span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,],</span>
+    <span class="p">])</span>
+
+<span class="c1">#input value / real value
+</span><span class="n">cp_k</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1e5</span><span class="o">/</span><span class="mf">9e9</span><span class="p">)</span>
+<span class="n">cp_q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">1.6e-19</span><span class="p">))</span>
+<span class="n">cp_m</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mf">9.1e-31</span><span class="p">))</span>
+<span class="n">cp_B</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c_vec</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">cp_B</span><span class="p">,</span><span class="n">cp_k</span><span class="p">,</span><span class="n">cp_q</span><span class="p">,</span><span class="n">cp_m</span><span class="p">])</span>
+
+<span class="n">A_unk</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">A_kn</span> <span class="o">=</span> <span class="o">-</span><span class="n">A</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:]</span>
+<span class="n">b</span><span class="o">=</span> <span class="n">A_kn</span><span class="o">@</span><span class="n">c_vec</span>
+
+<span class="c1">#If the condition number is too large, the matrix often has too low rank
+#to solve Ax=b. It should be around ~1 to 10
+</span><span class="k">if</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">cond</span><span class="p">(</span><span class="n">A_unk</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">1e2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Bad matrix: the problem cannot be solved.'</span><span class="p">)</span>
+
+<span class="c1">#If you know the linear independent rows
+</span><span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">exact_result</span><span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A_unk</span><span class="p">[</span><span class="n">indices</span><span class="p">,:],</span><span class="n">b</span><span class="p">[</span><span class="n">indices</span><span class="p">]))</span>
+<span class="c1">#This should match the results (without knowing indep. rows)
+</span><span class="n">exact_result2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">A_unk</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">rcond</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+
+<span class="c1">#Print results
+</span><span class="k">print</span><span class="p">(</span><span class="s">'A_known:</span><span class="se">\n</span><span class="s"> %s'</span><span class="o">%</span><span class="p">(</span><span class="n">A_kn</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'A_unknown:</span><span class="se">\n</span><span class="s"> %s'</span><span class="o">%</span><span class="p">(</span><span class="n">A_unk</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Result 1: %s'</span><span class="o">%</span><span class="p">(</span><span class="n">exact_result</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Result 2: %s'</span><span class="o">%</span><span class="p">(</span><span class="n">exact_result2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'%s a_real=  a_sim'</span><span class="o">%</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exact_result2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'a_real = %s a_sim'</span><span class="o">%</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">exact_result2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span></code></pre></figure>
+
+<p>which outputs</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">A_known:
+ [[ 0  1  2 -1]
+ [ 0  0  1 -1]
+ [ 1  0  1 -1]
+ [ 0  1  1  0]
+ [-1  1  1  0]
+ [ 1  0  0  0]]
+A_unknown:
+ [[ 3 -2  0]
+ [ 1 -2 -1]
+ [ 0 -1  0]
+ [ 2  0  1]
+ [ 3 -1  0]
+ [-1  1  1]]
+Result 1: [19.25476617 25.89275033 -6.63798416]
+Result 2: [19.25476617 25.89275033 -6.63798416]
+[2.30270710e+08 1.75824176e+11 1.30966466e-03] a_real=  a_sim
+a_real = [4.34271472e-09 5.68750000e-12 7.63554236e+02] a_sim</code></pre></figure>
+
+\[\begin{align*}
+c_x &amp;= 2.3\cdot 10^8\\
+c_t &amp;= 1.76 \cdot 10^{11}\\
+c_E &amp;= 1.31 \cdot 10^{-3}
+\end{align*}\]
+
+<p>in other words, a unit of 1 simulation meter is in reality $4.3\unit{nm}$, 1 simulation second is $5.6\unit{fs}$ and an electric field of 1 simulation volt per simulation meter is $760 \frac{V}{m}$. That’s good to know!</p>
+
+<h1> Footnotes </h1>
+<p>Coming back to our example: scaling the values to simulation values is the same as changing the dimensions where $x$ is in meters, $\tilde{x}$ is in unit ‘simulation meters’ $m^{sim}$ and $c_x$ has the unit $\frac{m^{sim}}{m}$ ‘meters per simulation meter’.</p>
+
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Elmoreapolis</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Elmoreapolis</li><li><a class="u-email" href="mailto:elmorevaal@gmail.com">elmorevaal@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ElmoreV"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ElmoreV</span></a></li><li><a href="https://www.twitter.com/MoreVaal"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">MoreVaal</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Hi! Please consult your doctor about the recommended daily dose of topics for you.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
